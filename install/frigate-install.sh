@@ -41,7 +41,7 @@ msg_ok "Installed go2rtc"
 
 msg_info "Installing sqlite_vec"
 SQLITE_VEC_VERSION="0.1.3"
-$STD apt-get -y {build-dep,sqlite3,gettext,git}
+$STD apt-get install -y {build-dep,sqlite3,gettext,git}
 mkdir /tmp/sqlite_vec
 # Grab the sqlite_vec source code.
 wget -nv https://github.com/asg017/sqlite-vec/archive/refs/tags/v${SQLITE_VEC_VERSION}.tar.gz
