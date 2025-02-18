@@ -39,6 +39,26 @@ chmod +x go2rtc
 $STD ln -svf /usr/local/go2rtc/bin/go2rtc /usr/local/bin/go2rtc
 msg_ok "Installed go2rtc"
 
+msg_info "Installing sqlite_vec"
+SQLITE_VEC_VERSION="0.1.3"
+$STD apt-get -y {build-dep,sqlite3,gettext,git}
+mkdir /tmp/sqlite_vec
+# Grab the sqlite_vec source code.
+wget -nv https://github.com/asg017/sqlite-vec/archive/refs/tags/v${SQLITE_VEC_VERSION}.tar.gz
+tar -zxf v${SQLITE_VEC_VERSION}.tar.gz -C /tmp/sqlite_vec
+cd /tmp/sqlite_vec/sqlite-vec-${SQLITE_VEC_VERSION}
+mkdir -p vendor
+wget -O sqlite-amalgamation.zip https://www.sqlite.org/2024/sqlite-amalgamation-3450300.zip
+unzip sqlite-amalgamation.zip
+mv sqlite-amalgamation-3450300/* vendor/
+rmdir sqlite-amalgamation-3450300
+rm sqlite-amalgamation.zip
+# build loadable module
+$STD make loadable
+# install it
+cp dist/vec0.* /usr/local/lib
+msg_info "Installed sqlite_vec"
+
 msg_info "Setting Up Hardware Acceleration"
 $STD apt-get -y install {va-driver-all,ocl-icd-libopencl1,intel-opencl-icd,vainfo,intel-gpu-tools}
 if [[ "$CTTYPE" == "0" ]]; then
