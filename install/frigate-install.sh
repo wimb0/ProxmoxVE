@@ -47,7 +47,7 @@ cp /etc/apt/sources.list /etc/apt/sources.list.d/sources-src.list
 sed -i 's|deb http|deb-src http|g' /etc/apt/sources.list.d/sources-src.list
 
 $STD apt-get update
-$STD apt-get install -y {build-dep,sqlite3,gettext,git}
+$STD apt-get install -y {sqlite3,gettext,git}
 mkdir /tmp/sqlite_vec
 # Grab the sqlite_vec source code.
 wget -nv https://github.com/asg017/sqlite-vec/archive/refs/tags/v${SQLITE_VEC_VERSION}.tar.gz
